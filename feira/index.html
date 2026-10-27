@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b0f19">
+  <meta name="description" content="Feira de Jogos DevLife 26.2 — Mostra dos jogos desenvolvidos em Python e Pygame pelos estudantes do Insper.">
+  <title>Feira de Jogos — DevLife Pygame 26.2</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip-link" href="#galeria">Pular para os jogos</a>
+
+  <header class="hero-banner">
+    <div class="container hero-inner">
+      <div class="brand-badge">
+        <span class="badge-dot" aria-hidden="true"></span>
+        <span>Insper · DevLife 26.2</span>
+      </div>
+      <h1 class="hero-title">Feira de Jogos Pygame</h1>
+      <p class="hero-subtitle">
+        Projetos autorais desenvolvidos em Python e Pygame. Explore os sites oficiais de cada equipe, conheça os universos criados e confira o processo de desenvolvimento.
+      </p>
+
+      <div class="stats-bar" role="region" aria-label="Resumo da mostra">
+        <div class="stat-item">
+          <span class="stat-number">8</span>
+          <span class="stat-label">Equipes & Jogos</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">Pygame</span>
+          <span class="stat-label">Engine & Código</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">GitHub Pages</span>
+          <span class="stat-label">Sites Publicados</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content" id="galeria">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <h2 class="section-title">Galeria de Jogos</h2>
+          <p class="section-desc">Acesse a página oficial publicada no GitHub Pages por cada equipe:</p>
+        </div>
+        
+        <div class="filter-pills" role="toolbar" aria-label="Filtrar por gênero">
+          <button class="filter-btn is-active" type="button" data-filter="all">Todos (8)</button>
+          <button class="filter-btn" type="button" data-filter="arcade">Arcade & Esporte</button>
+          <button class="filter-btn" type="button" data-filter="action">Ação & Luta</button>
+          <button class="filter-btn" type="button" data-filter="adventure">Aventura & Mistério</button>
+          <button class="filter-btn" type="button" data-filter="rhythm">Ritmo</button>
+        </div>
+      </div>
+
+      <div class="games-grid" id="games-grid">
+
+        <!-- 1. The Fox Funk (Branco) -->
+        <article class="game-card" data-category="rhythm" data-team="branco">
+          <div class="card-media">
+            <img 
+              src="assets/games/branco.png" 
+              alt="Tela de partida do jogo The Fox Funk com raposas dançantes e notas musicais" 
+              width="1918" 
+              height="1081" 
+              loading="lazy"
+            >
+            <span class="genre-tag">Ritmo & Música</span>
+          </div>
+          <div class="card-body">
+            <div class="card-meta">
+              <span class="team-badge team-branco">Grupo Branco</span>
+            </div>
+            <h3 class="game-name">The Fox Funk</h3>
+            <p class="game-summary">
+              Sinta a batida, entre no ritmo e desafie seus amigos em uma vibrante batalha musical com personagens animados e seleção de trilhas.
+            </p>
+            <div class="team-members">
+              <span class="members-label">Criadores:</span>
+              <span class="members-names">Júlia Fontes · Nathan Kuipper</span>
+            </div>
+            <div class="card-actions">
+              <a 
+                href="https://insper-classroom.github.io/26-2-devlife-pygame-site-Branco/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="btn-visit"
+                aria-label="Acessar site do jogo The Fox Funk (abre em nova aba)"
+              >
+                <span>Visitar Site GitHub Pages</span>
+                <svg class="btn-icon" viewBox="0 0 20 20" fill="currentColor" width="16" height="16" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M5.22 14.78a.75.75 0 001.06 0l7.22-7.22v5.69a.75.75 0 001.5 0v-7.5a.75.75 0 00-.75-.75h-7.5a.75.75 0 000 1.5h5.69l-7.22 7.22a.75.75 0 000 1.06z" clip-rule="evenodd" />
+                </svg>
+              </a>
+              <a 
+                href="https://github.com/insper-classroom/26-2-devlife-pygame-site-Branco" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="btn-code" 
+                title="Ver código no GitHub"
+                aria-label="Repositório GitHub de The Fox Funk"
+              >
+                GitHub
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 2. The Last Elixir (Dourado) -->
+        <article class="game-card" data-category="adventure" data-team="dourado">
+          <div class="card-media">
+            <img 
+              src="assets/games/dourado.png" 
+              alt="Cenário de santuário em caverna mística do jogo The Last Elixir" 
+              width="1536" 
+              height="1024" 
+              loading="lazy"
+            >
+            <span class="genre-tag">Aventura & RPG</span>
+          </div>
+          <div class="card-body">
+            <div class="card-meta">
+              <span class="team-badge team-dourado">Grupo Dourado</span>
+            </div>
+            <h3 class="game-name">The Last Elixir</h3>
+            <p class="game-summary">
+              Embarque em uma jornada épica com Bram através de florestas ancestrais e cavernas enigmáticas em busca do lendário último elixir.
+            </p>
+            <div class="team-members">
+              <span class="members-label">Criadores:</span>
+              <span class="members-names">Giuliano Kin Tanaka · Shirley Dias</span>
+            </div>
+            <div class="card-actions">
+              <a 
+                href="https://insper-classroom.github.io/26-2-devlife-pygame-site-Dourado/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="btn-visit"
+                aria-label="Acessar site do jogo The Last Elixir (abre em nova aba)"
+              >
+                <span>Visitar Site GitHub Pages</span>
+                <svg class="btn-icon" viewBox="0 0 20 20" fill="currentColor" width="16" height="16" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M5.22 14.78a.75.75 0 001.06 0l7.22-7.22v5.69a.75.75 0 001.5 0v-7.5a.75.75 0 00-.75-.75h-7.5a.75.75 0 000 1.5h5.69l-7.22 7.22a.75.75 0 000 1.06z" clip-rule="evenodd" />
+                </svg>
+              </a>
+              <a 
+                href="https://github.com/insper-classroom/26-2-devlife-pygame-site-Dourado" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="btn-code" 
+                title="Ver código no GitHub"
+                aria-label="Repositório GitHub de The Last Elixir"
+              >
+                GitHub
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 3. Alice Kyteler (Laranja) -->
+        <article class="game-card" data-category="action" data-team="laranja">
+          <div class="card-media">
+            <img 
+              src="assets/games/laranja.png" 
+              alt="Prévia do jogo Alice Kyteler com bruxa saltando plataformas e cenários sombrios" 
+              width="1100" 
+              height="650" 
+              loading="lazy"
+            >
+            <span class="genre-tag">Plataforma & Desafio</span>
+          </div>
+          <div class="card-body">
+            <div class="card-meta">
+              <span class="team-badge team-laranja">Grupo Laranja</span>
+            </div>
+            <h3 class="game-name">Alice Kyteler: Nove Círculos</h3>
+            <p class="game-summary">
+              Supere perigos mortais, escale plataformas móveis e arremesse poções estratégicas ao longo dos nove círculos místicos da jornada.
+            </p>
+            <div class="team-members">
+              <span class="members-label">Criadores:</span>
+              <span class="members-names">Caio Ang Jaw · João Pedro Grassano</span>
+            </div>
+            <div class="card-actions">
+              <a 
+                href="https://insper-classroom.github.io/26-2-devlife-pygame-site-Laranja/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="btn-visit"
+                aria-label="Acessar site do jogo Alice Kyteler (abre em nova aba)"
+              >
+                <span>Visitar Site GitHub Pages</span>
+                <svg class="btn-icon" viewBox="0 0 20 20" fill="currentColor" width="16" height="16" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M5.22 14.78a.75.75 0 001.06 0l7.22-7.22v5.69a.75.75 0 001.5 0v-7.5a.75.75 0 00-.75-.75h-7.5a.75.75 0 000 1.5h5.69l-7.22 7.22a.75.75 0 000 1.06z" clip-rule="evenodd" />
+                </svg>
+              </a>
+              <a 
+                href="https://github.com/insper-classroom/26-2-devlife-pygame-site-Laranja" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="btn-code" 
+                title="Ver código no GitHub"
+                aria-label="Repositório GitHub de Alice Kyteler"
+              >
+                GitHub
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 4. Backrooms (Magenta) -->
+        <article class="game-card" data-category="adventure" data-team="magenta">
+          <div class="card-media">
+            <img 
+              src="assets/games/magenta.png" 
+              alt="Poolrooms e salas liminares com sombras do jogo Backrooms" 
+              width="1100" 
+              height="740" 
+              loading="lazy"
+            >
+            <span class="genre-tag">Sobrevivência & Mistério</span>
+          </div>
+          <div class="card-body">
+            <div class="card-meta">
+              <span class="team-badge team-magenta">Grupo Magenta</span>
+            </div>
+            <h3 class="game-name">Backrooms</h3>
+            <p class="game-summary">
+              Explore labirintos liminares infinitos, salas desoladas e perigos ocultos nas sombras neste projeto de atmosfera e sobrevivência.
+            </p>
+            <div class="team-members">
+              <span class="members-label">Criadores:</span>
+              <span class="members-names">Lucas Domingues · Tales de Almeida</span>
+            </div>
+            <div class="card-actions">
+              <a 
+                href="https://insper-classroom.github.io/26-2-devlife-pygame-site-Magenta/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="btn-visit"
+                aria-label="Acessar site do jogo Backrooms (abre em nova aba)"
+              >
+                <span>Visitar Site GitHub Pages</span>
+                <svg class="btn-icon" viewBox="0 0 20 20" fill="currentColor" width="16" height="16" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M5.22 14.78a.75.75 0 001.06 0l7.22-7.22v5.69a.75.75 0 001.5 0v-7.5a.75.75 0 00-.75-.75h-7.5a.75.75 0 000 1.5h5.69l-7.22 7.22a.75.75 0 000 1.06z" clip-rule="evenodd" />
+                </svg>
+              </a>
+              <a 
+                href="https://github.com/insper-classroom/26-2-devlife-pygame-site-Magenta" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="btn-code" 
+                title="Ver código no GitHub"
+                aria-label="Repositório GitHub de Backrooms"
+              >
+                GitHub
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 5. Overtrashed (Roxo) -->
+        <article class="game-card" data-category="arcade" data-team="roxo">
+          <div class="card-media">
+            <img 
+              src="assets/games/roxo.png" 
+              alt="Cenário de estrada e ambiente urbano do jogo Overtrashed" 
+              width="1672" 
+              height="941" 
+              loading="lazy"
+            >
+            <span class="genre-tag">Ação & Meio Ambiente</span>
+          </div>
+          <div class="card-body">
+            <div class="card-meta">
+              <span class="team-badge team-roxo">Team Roxo</span>
+            </div>
+            <h3 class="game-name">Overtrashed</h3>
+            <p class="game-summary">
+              A cidade está um caos de resíduos. Vista o uniforme de gari, recolha os entulhos e restaure a ordem ambiental dos bairros e praças.
+            </p>
+            <div class="team-members">
+              <span class="members-label">Criadores:</span>
+              <span class="members-names">Augusto Gomes · Leonardo Sanches</span>
+            </div>
+            <div class="card-actions">
+              <a 
+                href="https://insper-classroom.github.io/26-2-devlife-pygame-site-Roxo/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="btn-visit"
+                aria-label="Acessar site do jogo Overtrashed (abre em nova aba)"
+              >
+                <span>Visitar Site GitHub Pages</span>
+                <svg class="btn-icon" viewBox="0 0 20 20" fill="currentColor" width="16" height="16" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M5.22 14.78a.75.75 0 001.06 0l7.22-7.22v5.69a.75.75 0 001.5 0v-7.5a.75.75 0 00-.75-.75h-7.5a.75.75 0 000 1.5h5.69l-7.22 7.22a.75.75 0 000 1.06z" clip-rule="evenodd" />
+                </svg>
+              </a>
+              <a 
+                href="https://github.com/insper-classroom/26-2-devlife-pygame-site-Roxo" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="btn-code" 
+                title="Ver código no GitHub"
+                aria-label="Repositório GitHub de Overtrashed"
+              >
+                GitHub
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 6. HEADCODE (Turquesa) -->
+        <article class="game-card" data-category="arcade" data-team="turquesa">
+          <div class="card-media">
+            <img 
+              src="assets/games/turquesa.png" 
+              alt="Partida de futebol de cabeção em pixel art no jogo HEADCODE" 
+              width="1000" 
+              height="600" 
+              loading="lazy"
+            >
+            <span class="genre-tag">Futebol Arcade</span>
+          </div>
+          <div class="card-body">
+            <div class="card-meta">
+              <span class="team-badge team-turquesa">Grupo Turquesa</span>
+            </div>
+            <h3 class="game-name">HEADCODE</h3>
+            <p class="game-summary">
+              Futebol arcade retrô com personagens cabeçudos, arenas temáticas que vão do Insper à praia e disputas competitivas cheias de gols.
+            </p>
+            <div class="team-members">
+              <span class="members-label">Criadores:</span>
+              <span class="members-names">Fernando Khoury · Márcio Bettarello · Roberson Moureira</span>
+            </div>
+            <div class="card-actions">
+              <a 
+                href="https://insper-classroom.github.io/26-2-devlife-pygame-site-Turquesa/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="btn-visit"
+                aria-label="Acessar site do jogo HEADCODE (abre em nova aba)"
+              >
+                <span>Visitar Site GitHub Pages</span>
+                <svg class="btn-icon" viewBox="0 0 20 20" fill="currentColor" width="16" height="16" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M5.22 14.78a.75.75 0 001.06 0l7.22-7.22v5.69a.75.75 0 001.5 0v-7.5a.75.75 0 00-.75-.75h-7.5a.75.75 0 000 1.5h5.69l-7.22 7.22a.75.75 0 000 1.06z" clip-rule="evenodd" />
+                </svg>
+              </a>
+              <a 
+                href="https://github.com/insper-classroom/26-2-devlife-pygame-site-Turquesa" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="btn-code" 
+                title="Ver código no GitHub"
+                aria-label="Repositório GitHub de HEADCODE"
+              >
+                GitHub
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 7. Arena dos Memes (Vermelho) -->
+        <article class="game-card" data-category="action" data-team="vermelho">
+          <div class="card-media">
+            <img 
+              src="assets/games/vermelho.png" 
+              alt="Batalha de luta 2D no Congresso Nacional com personagens icônicos no Arena dos Memes" 
+              width="1280" 
+              height="720" 
+              loading="lazy"
+            >
+            <span class="genre-tag">Luta 2D Arcade</span>
+          </div>
+          <div class="card-body">
+            <div class="card-meta">
+              <span class="team-badge team-vermelho">Grupo Vermelho</span>
+            </div>
+            <h3 class="game-name">Arena dos Memes</h3>
+            <p class="game-summary">
+              Duelos intensos de luta 2D em pixel art com lendas da cultura da internet brasileira, cenários icônicos e combos hilários de arcade.
+            </p>
+            <div class="team-members">
+              <span class="members-label">Criadores:</span>
+              <span class="members-names">Felipe Kenji Sudo · Renan Ramos Gonçalves</span>
+            </div>
+            <div class="card-actions">
+              <a 
+                href="https://insper-classroom.github.io/26-2-devlife-pygame-site-Vermelho/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="btn-visit"
+                aria-label="Acessar site do jogo Arena dos Memes (abre em nova aba)"
+              >
+                <span>Visitar Site GitHub Pages</span>
+                <svg class="btn-icon" viewBox="0 0 20 20" fill="currentColor" width="16" height="16" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M5.22 14.78a.75.75 0 001.06 0l7.22-7.22v5.69a.75.75 0 001.5 0v-7.5a.75.75 0 00-.75-.75h-7.5a.75.75 0 000 1.5h5.69l-7.22 7.22a.75.75 0 000 1.06z" clip-rule="evenodd" />
+                </svg>
+              </a>
+              <a 
+                href="https://github.com/insper-classroom/26-2-devlife-pygame-site-Vermelho" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="btn-code" 
+                title="Ver código no GitHub"
+                aria-label="Repositório GitHub de Arena dos Memes"
+              >
+                GitHub
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 8. Pane no Laboratório (Violeta) -->
+        <article class="game-card" data-category="adventure" data-team="violeta">
+          <div class="card-media">
+            <img 
+              src="assets/games/violeta.png" 
+              alt="Cientista conectando baterias enquanto foge de robôs no jogo Pane no Laboratório" 
+              width="960" 
+              height="640" 
+              loading="lazy"
+            >
+            <span class="genre-tag">Fuga & Sobrevivência</span>
+          </div>
+          <div class="card-body">
+            <div class="card-meta">
+              <span class="team-badge team-violeta">Grupo Violeta</span>
+            </div>
+            <h3 class="game-name">Pane no Laboratório</h3>
+            <p class="game-summary">
+              A segurança falhou e os robôs saíram de controle. Sobreviva a três setores científicos, conecte baterias e alcance a saída antes que sua energia acabe.
+            </p>
+            <div class="team-members">
+              <span class="members-label">Criadores:</span>
+              <span class="members-names">Gustavo Almeida · Luis Miguel Telo · Thiago Lima</span>
+            </div>
+            <div class="card-actions">
+              <a 
+                href="https://insper-classroom.github.io/26-2-devlife-pygame-site-Violeta/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="btn-visit"
+                aria-label="Acessar site do jogo Pane no Laboratório (abre em nova aba)"
+              >
+                <span>Visitar Site GitHub Pages</span>
+                <svg class="btn-icon" viewBox="0 0 20 20" fill="currentColor" width="16" height="16" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M5.22 14.78a.75.75 0 001.06 0l7.22-7.22v5.69a.75.75 0 001.5 0v-7.5a.75.75 0 00-.75-.75h-7.5a.75.75 0 000 1.5h5.69l-7.22 7.22a.75.75 0 000 1.06z" clip-rule="evenodd" />
+                </svg>
+              </a>
+              <a 
+                href="https://github.com/insper-classroom/26-2-devlife-pygame-site-Violeta" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="btn-code" 
+                title="Ver código no GitHub"
+                aria-label="Repositório GitHub de Pane no Laboratório"
+              >
+                GitHub
+              </a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-info">
+        <p class="footer-title">DevLife 2026.2 · Insper</p>
+        <p class="footer-sub">Mostra de Desenvolvimento de Jogos com Python & Pygame</p>
+      </div>
+      <div class="footer-note">
+        <span>Organização das Equipes e Repositórios</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Filtragem simples e acessível por categoria
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.game-card');
+
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const filter = btn.getAttribute('data-filter');
+
+        filterButtons.forEach(b => b.classList.remove('is-active'));
+        btn.classList.add('is-active');
+
+        cards.forEach(card => {
+          const category = card.getAttribute('data-category');
+          if (filter === 'all' || category === filter) {
+            card.classList.remove('is-hidden');
+          } else {
+            card.classList.add('is-hidden');
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
