@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Developer Life • Slides de Django</title>
+  <style>
+    :root {
+      --bg: #f6f8f7;
+      --card: #ffffff;
+      --primary: #092e20;
+      --accent: #44b78b;
+      --text: #1f2937;
+      --muted: #6b7280;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding: 40px 20px;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    header {
+      background: var(--primary);
+      color: white;
+      padding: 32px;
+      border-radius: 12px;
+      margin-bottom: 32px;
+      border-bottom: 4px solid var(--accent);
+    }
+    header h1 { margin: 0 0 8px 0; font-size: 28px; }
+    header p { margin: 0; color: #d1fae5; font-size: 16px; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 16px;
+    }
+    a.card {
+      display: block;
+      background: var(--card);
+      border: 1px solid #e5e7eb;
+      border-left: 5px solid var(--accent);
+      border-radius: 8px;
+      padding: 18px 20px;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    a.card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(9, 46, 32, 0.08);
+    }
+    .num {
+      font-size: 13px;
+      font-weight: 700;
+      color: #0c4b33;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .title {
+      font-size: 17px;
+      font-weight: 600;
+      margin: 6px 0;
+      color: var(--primary);
+    }
+    .badge {
+      display: inline-block;
+      background: #ecfdf5;
+      color: #065f46;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 999px;
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Sistemas Web com Django • Slides</h1>
+      <p>Developer Life (Insper) — Trilha Completa em 14 Subtópicos</p>
+    </header>
+    <div class="grid">
+      <a class="card" href="01-introducao-web-django/">
+        <div class="num">Módulo 01</div>
+        <div class="title">Introdução à Web e ao Django</div>
+        <span class="badge">Conceitos & MVT</span>
+      </a>
+      <a class="card" href="02-configuracao-venv-estrutura/">
+        <div class="num">Módulo 02</div>
+        <div class="title">Configuração, Venv e Estrutura</div>
+        <span class="badge">Check 1</span>
+      </a>
+      <a class="card" href="03-modelagem-migracoes-admin/">
+        <div class="num">Módulo 03</div>
+        <div class="title">Modelagem Inicial, Migrações e Admin</div>
+        <span class="badge">Check 2</span>
+      </a>
+      <a class="card" href="04-urls-e-views/">
+        <div class="num">Módulo 04</div>
+        <div class="title">URLs e Views</div>
+        <span class="badge">Check 3</span>
+      </a>
+      <a class="card" href="05-models-views-urls-querysets/">
+        <div class="num">Módulo 05</div>
+        <div class="title">Models, Views e URLs (QuerySets)</div>
+        <span class="badge">Check 4</span>
+      </a>
+      <a class="card" href="06-templates-html-base/">
+        <div class="num">Módulo 06</div>
+        <div class="title">Templates HTML e Herança</div>
+        <span class="badge">Check 5</span>
+      </a>
+      <a class="card" href="07-formularios-metodo-post/">
+        <div class="num">Módulo 07</div>
+        <div class="title">Formulários e o Método POST</div>
+        <span class="badge">Check 6</span>
+      </a>
+      <a class="card" href="08-parametros-de-url-crud/">
+        <div class="num">Módulo 08</div>
+        <div class="title">Parâmetros de URL (CRUD Completo)</div>
+        <span class="badge">Check 7</span>
+      </a>
+      <a class="card" href="09-arquivos-estaticos/">
+        <div class="num">Módulo 09</div>
+        <div class="title">Arquivos Estáticos</div>
+        <span class="badge">Check 8</span>
+      </a>
+      <a class="card" href="10-autenticacao-usuarios/">
+        <div class="num">Módulo 10</div>
+        <div class="title">Autenticação de Usuários</div>
+        <span class="badge">Check 9</span>
+      </a>
+      <a class="card" href="11-relacionamentos-foreignkey/">
+        <div class="num">Módulo 11</div>
+        <div class="title">Relacionamentos (ForeignKey)</div>
+        <span class="badge">Check 10</span>
+      </a>
+      <a class="card" href="12-desafio-many-to-many-tags/">
+        <div class="num">Módulo 12</div>
+        <div class="title">Desafio: Muitos-para-Muitos (Tags)</div>
+        <span class="badge">Desafio</span>
+      </a>
+      <a class="card" href="13-deploy-render-postgresql/">
+        <div class="num">Módulo 13</div>
+        <div class="title">Deploy no Render com PostgreSQL</div>
+        <span class="badge">Produção</span>
+      </a>
+      <a class="card" href="14-django-rest-react/">
+        <div class="num">Módulo 14</div>
+        <div class="title">Django REST Framework e React</div>
+        <span class="badge">API REST + SPA</span>
+      </a>
+    </div>
+  </div>
+</body>
+</html>
