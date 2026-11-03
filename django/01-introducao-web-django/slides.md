@@ -8,119 +8,134 @@ footer: "Insper • 01. Introdução à Web e ao Django"
 style: |
   section {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: 26px;
+    font-size: 24px;
   }
   h1 { color: #092e20; }
   h2 { color: #0c4b33; border-bottom: 2px solid #44b78b; padding-bottom: 6px; }
   code { background: #f0f4f2; color: #0c4b33; padding: 2px 6px; border-radius: 4px; }
   pre code { background: transparent; color: inherit; }
   .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: center; }
-  .box { background: #f4fbf7; border-left: 5px solid #44b78b; padding: 14px 18px; border-radius: 6px; margin-top: 12px; }
-  .warn { background: #fff8e6; border-left: 5px solid #f59e0b; padding: 14px 18px; border-radius: 6px; margin-top: 12px; }
+  .box { background: #f4fbf7; border-left: 5px solid #44b78b; padding: 12px 16px; border-radius: 6px; margin-top: 10px; }
+  .warn { background: #fff8e6; border-left: 5px solid #f59e0b; padding: 12px 16px; border-radius: 6px; margin-top: 10px; }
+  table { font-size: 21px; width: 100%; }
 ---
 
 <!-- _class: lead -->
 # 01. Introdução à Web e ao Django
-### Da Biblioteca ao Framework Web
+### Como a internet funciona e o que acontece dentro do servidor
 
 **Projeto da Trilha:** Sistema de Anotações **Get-it**
 Django 6.X • Python
 
 ---
 
-## Biblioteca vs. Framework
+## O que muda: Biblioteca vs. Framework
 
 <div class="cols">
 <div>
 
 ### Biblioteca (ex: Pygame)
-- Você escreve o `while True` principal
-- **Seu código chama** as funções da biblioteca quando quer
-- Você controla o fluxo de execução
+- **Você** cria o loop principal (`while True`).
+- **O seu programa chama** as funções da biblioteca na ordem que você quiser.
+- Você controla todo o fluxo.
 
 </div>
 <div>
 
 ### Framework (ex: Django)
-- A estrutura principal **já está pronta**
-- Você define funções e classes no padrão exigido
-- **O framework chama o seu código** no momento certo (*Inversão de Controle*)
+- O loop de esperar requisições de rede **já vem pronto**.
+- Você escreve funções e classes em arquivos específicos (`views.py`, `models.py`).
+- **O Django chama as suas funções** quando chega uma requisição (*Inversão de Controle*).
 
 </div>
 </div>
 
-<div class="warn">
-<strong>Aprendendo a aprender:</strong> Sempre consulte a documentação oficial do <strong>Django 6.X</strong>.
+<div class="box">
+<strong>Por que isso importa?</strong> Você não vai dar <code>python meu_programa.py</code> para rodar uma função isolada. O servidor Django fica rodando e aciona seu código automaticamente a cada acesso do navegador!
 </div>
 
 ---
 
-## Como a Internet Funciona: IP e Porta
+## Como um Computador Encontra Outro na Rede?
 
-Para dois programas conversarem na rede, precisamos de **duas informações**:
-
-- **Endereço IP (`192.168.0.1`):** Identifica **qual computador** (dispositivo) na rede.
-- **Porta (`8000`):** Identifica **qual programa** dentro daquele computador.
+Para o navegador conversar com o nosso servidor Django, ele precisa de **2 endereços**:
 
 ```text
-192.168.0.1:8000
-└────┬────┘ └─┬┘
-Computador   Programa (Servidor Django)
+192.168.0.1 : 8000
+└────┬────┘   └─┬┘
+ Endereço IP   Porta
 ```
+
+1. **Endereço IP (`192.168.0.1` ou `localhost`):** Identifica **qual computador** na rede queremos acessar (`localhost` = a sua própria máquina).
+2. **Porta (`8000`):** Um computador roda vários programas usando a internet ao mesmo tempo (Spotify, navegador, VS Code). A porta identifica **qual programa específico** naquele computador deve receber a mensagem.
 
 ---
 
-## Anatomia de uma URL
+## Anatomia de uma URL: O que cada parte faz?
 
-Quando digitamos um endereço no navegador, usamos uma **URL** (*Uniform Resource Locator*):
+Quando você digita um endereço no navegador, ele é desmontado em **4 partes**:
 
 ```text
 http://192.168.32.18:8000/imagens/logotipo.png
 └─┬┘   └─────┬─────┘ └─┬┘└─────────┬─────────┘
-Protocolo Endereço   Porta      Caminho (Path)
+ (1)        (2)       (3)         (4)
 ```
 
-- **Protocolo (`http` / `https`):** Regra de comunicação.
-- **Endereço (`insper.edu.br` $\rightarrow$ DNS $\rightarrow$ IP):** Localização do servidor.
-- **Porta (`8000`):** Porta do servidor web.
-- **Caminho (`/imagens/logotipo.png`):** Qual recurso queremos acessar.
+| Parte | Valor no exemplo | O que acontece nos bastidores? |
+| :--- | :--- | :--- |
+| **(1) Protocolo** | `http` | Define a língua (regras) usada na conversa entre navegador e servidor. |
+| **(2) Endereço** | `192.168.32.18` | Usado na rede para chegar até a máquina do servidor (nomes como `insper.edu.br` são traduzidos para IP pelo **DNS**). |
+| **(3) Porta** | `8000` | Entrega o pacote para o processo do Django que está escutando nessa porta. |
+| **(4) Caminho** | `/imagens/logotipo.png` | **Entregue ao Django** para ele decidir qual página ou arquivo devolver! |
 
 ---
 
-## Ciclo Requisição $\leftrightarrow$ Resposta
+## Por Baixo dos Panos: Carregando uma Página Web
 
 <div class="cols">
 <div>
 
-1. **Cliente (Navegador)** envia uma **Requisição (*Request*)** pedindo um caminho.
-2. **Servidor (Django)** processa o pedido e devolve uma **Resposta (*Response*)** com HTML.
-3. Ao ler `<img src="...">` ou `<link href=".css">`, o navegador faz **novas requisições** para buscar cada arquivo.
+O carregamento de uma página não é uma única mensagem — é uma **conversa em etapas**:
+
+1. Você digita a URL no navegador.
+2. O navegador envia uma **Requisição (*Request*)** pedindo o caminho.
+3. O Django processa e devolve uma **Resposta (*Response*)** com o texto HTML.
+4. O navegador lê o HTML. Ao encontrar `<img src="...">` ou `<link href=".css">`, ele faz **novas requisições automáticas** para buscar cada imagem e estilo!
 
 </div>
 <div>
 
-![w:480](../assets/client-server.jpg)
+![w:460](../assets/client-server.jpg)
 
 </div>
 </div>
 
 ---
 
-## O Fluxo Interno do Django (Arquitetura MVT)
+## O Mapa Completo: O que Acontece Dentro do Django?
 
-![w:880 center](../assets/django-flow.png)
+![w:840 center](../assets/django-flow.png)
 
 ---
 
-## Resumo do Fluxo no Servidor (6 Passos)
+## Passo a Passo da Requisição no Servidor (1 a 6)
 
-1. **Requisição** chega ao servidor na porta `8000`.
-2. **`urls.py`** analisa o caminho recebido e escolhe qual função executar.
-3. **`views.py`** tem sua função chamada (recebe `request`).
-4. **`models.py`** é usado pela view para consultar/salvar no **Banco de Dados**.
-5. **`templates/`** é usado pela view para montar o **HTML** com os dados.
-6. **Resposta HTTP** é devolvida pela view para o navegador.
+Quando o navegador pede `http://localhost:8000/caminho/escolhido`:
 
-<div class="box">
-<strong>Próximo passo:</strong> Preparar nosso ambiente virtual e criar o projeto <code>getit</code>!
-</div>
+1. **Chegada:** A requisição entra na porta `8000` e é entregue ao Django.
+2. **Roteamento (`urls.py`):** O Django olha apenas o caminho (`/caminho/escolhido`) e procura na lista de rotas qual função deve ser chamada.
+3. **Execução da Lógica (`views.py`):** A função escolhida (chamada de *view*) é executada, recebendo todos os dados do pedido no parâmetro `request`.
+4. **Banco de Dados (`models.py`):** Se precisar ler ou salvar dados, a *view* conversa com o banco de dados através das classes de modelo.
+5. **Construção do HTML (`templates/`):** A *view* injeta os dados do banco em um molde HTML (*template*) usando um dicionário de contexto.
+6. **Resposta:** O HTML final pronto é empacotado em um `HttpResponse` e enviado de volta ao navegador do usuário.
+
+---
+
+## Resumo Rápido: Quem faz o quê no Django?
+
+| Arquivo / Pasta | Papel na Arquitetura MVT | Pergunta que ele responde |
+| :--- | :--- | :--- |
+| **`urls.py`** | Roteador de endereços | *"Qual função devo chamar para este caminho da URL?"* |
+| **`views.py`** | Maestro / Controlador da lógica | *"Quais dados preciso buscar ou salvar e qual resposta devolver?"* |
+| **`models.py`** | Representação das tabelas do banco | *"Qual é o formato dos dados guardados no banco de dados?"* |
+| **`templates/`** | Molde visual da página | *"Como exibir esses dados em formato HTML para o usuário?"* |

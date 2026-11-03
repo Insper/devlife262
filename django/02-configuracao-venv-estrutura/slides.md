@@ -8,145 +8,144 @@ footer: "Insper • 02. Configuração, Venv e Estrutura (Check 1)"
 style: |
   section {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: 26px;
+    font-size: 24px;
   }
   h1 { color: #092e20; }
   h2 { color: #0c4b33; border-bottom: 2px solid #44b78b; padding-bottom: 6px; }
   code { background: #f0f4f2; color: #0c4b33; padding: 2px 6px; border-radius: 4px; }
   pre code { background: transparent; color: inherit; }
   .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: center; }
-  .box { background: #f4fbf7; border-left: 5px solid #44b78b; padding: 14px 18px; border-radius: 6px; margin-top: 12px; }
-  .warn { background: #fff8e6; border-left: 5px solid #f59e0b; padding: 14px 18px; border-radius: 6px; margin-top: 12px; }
+  .box { background: #f4fbf7; border-left: 5px solid #44b78b; padding: 12px 16px; border-radius: 6px; margin-top: 10px; }
+  .warn { background: #fff8e6; border-left: 5px solid #f59e0b; padding: 12px 16px; border-radius: 6px; margin-top: 10px; }
+  table { font-size: 21px; width: 100%; }
 ---
 
 <!-- _class: lead -->
 # 02. Configuração, Venv e Estrutura
-### Criando o projeto **Get-it** e o app **notes**
+### O que cada comando cria e como os arquivos se conectam
 
 **Entrega vinculada:** Check 1
 
 ---
 
-## Por que Ambiente Virtual (`venv`)?
+## O que é o `venv` e por que usamos?
 
 <div class="cols">
 <div>
 
-- Projetos diferentes exigem **versões diferentes** das mesmas bibliotecas.
-- O `venv` cria uma instalação isolada do Python exclusiva para a pasta do projeto.
-- Arquivo `requirements.txt` lista os pacotes necessários:
-  ```text
-  Django
-  ```
+### O que acontece sem `venv`?
+- Todos os pacotes (`pygame`, `django`) vão para a mesma pasta global do computador.
+- Se um projeto antigo exigir Django 4 e um novo exigir Django 6, um quebra o outro.
+
+### O que o `venv` faz nos bastidores?
+- Cria uma pasta `.venv` dentro do projeto com uma **cópia isolada do Python e do `pip`**.
+- Tudo que instalamos com o `venv` ativo fica restrito apenas a este projeto!
 
 </div>
 <div>
 
-![w:480](../assets/python_venv.jpg)
+![w:460](../assets/python_venv.jpg)
 
 </div>
 </div>
 
 ---
 
-## Criando e Ativando o `venv`
+## Anatomia dos Comandos do `venv`
 
 <div class="cols">
 <div>
 
-### Opção 1: VS Code
-1. `F1` $\rightarrow$ `Python: Create Environment`
-2. Selecionar `Venv` $\rightarrow$ versão do Python
-3. Marcar `requirements.txt`
-
-</div>
-<div>
-
-### Opção 2: Terminal
-
 **macOS / Linux:**
 ```bash
-python3 -m venv .venv --prompt .
-. .venv/bin/activate
-pip install -r requirements.txt
+python3 -m venv .venv --prompt .   # (1)
+. .venv/bin/activate               # (2)
+pip install -r requirements.txt    # (3)
 ```
 
 **Windows (PowerShell):**
 ```powershell
-python3 -m venv .venv --prompt .
-. .venv\Scripts\Activate.ps1
-pip install -r requirements.txt
+python3 -m venv .venv --prompt .   # (1)
+. .venv\Scripts\Activate.ps1       # (2)
+pip install -r requirements.txt    # (3)
 ```
+
+</div>
+<div>
+
+### O que cada linha faz?
+1. **`-m venv .venv`:** Cria a pasta `.venv` com o Python isolado.
+2. **`activate`:** Faz o seu terminal passar a usar o Python de dentro da `.venv` (precisa rodar sempre que abrir um terminal novo!).
+3. **`pip install -r requirements.txt`:** Lê a lista de pacotes do arquivo `requirements.txt` e instala todos de uma vez.
 
 </div>
 </div>
 
 ---
 
-## Gerando a Estrutura do Projeto
-
-Com o `.venv` ativo, criamos o projeto `getit` na pasta atual:
+## Gerando o Projeto: O que `startproject` faz?
 
 ```bash
 django-admin startproject getit .
 ```
 
-<div class="warn">
-<strong>Atenção ao ponto (<code>.</code>) no final!</strong> Sem ele, o Django criará uma pasta extra desnecessária.
-</div>
+- **`django-admin`:** Ferramenta instalada pelo pacote Django para criar estruturas iniciais (*boilerplate*).
+- **`startproject getit`:** Cria o pacote principal de configuração chamado `getit`.
+- **O ponto `.` no final:** Diz *"crie os arquivos diretamente na pasta atual"*. (Sem o `.`, ele criaria `pasta-atual/getit/getit/settings.py`).
 
 ```text
 pasta-do-projeto/
-├── .venv/
-├── manage.py          # Comandos de automação (runserver, migrate, startapp...)
-└── getit/
-    ├── settings.py    # Configurações globais do projeto
-    ├── urls.py        # Roteamento principal de URLs
-    └── wsgi.py / asgi.py
+├── .venv/               # Ambiente virtual isolado
+├── manage.py            # Controle remoto do nosso projeto Django
+└── getit/               # Pacote de configuração do projeto
+    ├── __init__.py      # Indica ao Python que a pasta getit é um módulo importável
+    ├── settings.py      # Painel de controle: apps instalados, banco de dados, idioma
+    ├── urls.py          # Porta de entrada de todas as rotas da aplicação
+    └── wsgi.py / asgi.py# Conector usado no deploy em servidores de produção
 ```
 
 ---
 
-## Testando o Servidor (Check 1)
+## O que acontece quando rodamos `runserver`? (Check 1)
 
 <div class="cols">
 <div>
-
-Execute no terminal:
 
 ```bash
 python manage.py runserver
 ```
 
-Acesse no navegador:
-**`http://localhost:8000`**
+### Nos bastidores:
+1. O `manage.py` lê as configurações em `getit/settings.py`.
+2. Inicia um servidor web local escutando na porta **`8000`**.
+3. Fica monitorando seus arquivos `.py`: sempre que você salva uma alteração, ele **reinicia sozinho**!
 
 <div class="box">
-<strong>Check 1:</strong> Servidor rodando localmente em <code>localhost:8000</code> sem erros! Faça commit e valide com o professor.
+<strong>Check 1:</strong> Acesse <code>http://localhost:8000</code> e mostre a página do foguete funcionando!
 </div>
 
 </div>
 <div>
 
-![w:460](../assets/django-page.png)
+![w:440](../assets/django-page.png)
 
 </div>
 </div>
 
 ---
 
-## Conceito: Projeto vs. App
+## Projeto vs. App: Qual a diferença?
 
 <div class="cols">
 <div>
 
-- **Projeto (`getit`):** O sistema completo e suas configurações.
-- **App (`notes`):** Um módulo focado em uma tarefa específica (ex: notas, pagamentos, usuários).
+- **Projeto (`getit`):** É a casca do sistema inteiro (configurações globais, conexão com banco, lista de rotas raiz).
+- **App (`notes`):** É um módulo focado em uma funcionalidade específica (no nosso caso, cuidar das anotações).
 
-Criando nosso app:
 ```bash
 python manage.py startapp notes
 ```
+> Cria a pasta `notes/` com `models.py`, `views.py`, `admin.py` e `apps.py`.
 
 </div>
 <div>
@@ -158,23 +157,22 @@ python manage.py startapp notes
 
 ---
 
-## Registrando o App no `settings.py`
+## Conectando o App ao Projeto (`settings.py`)
 
-Todo app criado **precisa** ser listado em `INSTALLED_APPS`:
+Criar a pasta `notes/` com `startapp` **não** conecta o app automaticamente ao projeto. Precisamos avisar o Django no `getit/settings.py`:
 
-**Arquivo:** `getit/settings.py`
 ```python
+# Arquivo: getit/settings.py
 INSTALLED_APPS = [
-    'notes.apps.NotesConfig',  # <-- Adicione como primeiro item (não esqueça a vírgula!)
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+    'notes.apps.NotesConfig',    # (1) Conecta a classe NotesConfig criada em notes/apps.py
+    'django.contrib.admin',      # (2) App nativo da interface de administração
+    'django.contrib.auth',       # (3) App nativo de usuários, senhas e login
+    'django.contrib.staticfiles',# (4) App nativo para servir CSS e imagens
+    ...
 ]
 ```
 
 <div class="warn">
-<strong>Crucial:</strong> Sem registrar o app no <code>settings.py</code>, o Django ignorará nossos modelos e templates!
+<strong>O que acontece se esquecer este passo?</strong><br>
+Quando você criar modelos ou templates dentro de <code>notes/</code>, o Django vai ignorá-los completamente (gerando erros como <code>TemplateDoesNotExist</code> ou não criando tabelas no banco)!
 </div>

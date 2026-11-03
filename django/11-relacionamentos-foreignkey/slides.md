@@ -8,45 +8,48 @@ footer: "Insper • 11. Relacionamentos Entre Modelos (Check 10)"
 style: |
   section {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: 26px;
+    font-size: 24px;
   }
   h1 { color: #092e20; }
   h2 { color: #0c4b33; border-bottom: 2px solid #44b78b; padding-bottom: 6px; }
   code { background: #f0f4f2; color: #0c4b33; padding: 2px 6px; border-radius: 4px; }
   pre code { background: transparent; color: inherit; }
   .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: center; }
-  .box { background: #f4fbf7; border-left: 5px solid #44b78b; padding: 14px 18px; border-radius: 6px; margin-top: 12px; }
-  .warn { background: #fff8e6; border-left: 5px solid #f59e0b; padding: 14px 18px; border-radius: 6px; margin-top: 12px; }
+  .box { background: #f4fbf7; border-left: 5px solid #44b78b; padding: 12px 16px; border-radius: 6px; margin-top: 10px; }
+  .warn { background: #fff8e6; border-left: 5px solid #f59e0b; padding: 12px 16px; border-radius: 6px; margin-top: 10px; }
+  table { font-size: 21px; width: 100%; }
 ---
 
 <!-- _class: lead -->
 # 11. Relacionamentos Entre Modelos
-### Chaves Estrangeiras (`ForeignKey`) e Dados por Usuário
+### Como funciona uma Chave Estrangeira (`ForeignKey`) no banco e no Django
 
 **Entrega vinculada:** Check 10
 
 ---
 
-## Chave Estrangeira (Relacionamento 1 para N)
+## Como o Banco de Dados Liga Duas Tabelas?
 
 <div class="cols">
 <div>
 
-- Um usuário pode ter **várias** anotações.
-- Cada anotação pertence a **um único** usuário (autor/dono).
-- No banco relacional, uma coluna guarda o **`id`** da linha correspondente na tabela de usuários.
+No momento, qualquer usuário logado vê as anotações de **todo mundo**, porque a tabela `Note` não guarda quem criou cada nota!
+
+### Como resolver em bancos relacionais:
+- Adicionamos uma coluna na tabela de anotações que armazena o **`id` do usuário** na tabela `User`.
+- Essa coluna que aponta para o `id` de outra tabela é chamada de **Chave Estrangeira (*Foreign Key*)**.
 
 </div>
 <div>
 
-![w:480](../assets/tabela-relacionamento.png)
+![w:460](../assets/tabela-relacionamento.png)
 
 </div>
 </div>
 
 ---
 
-## Adicionando `ForeignKey` e Migrando
+## Anatomia do `ForeignKey` no `models.py`
 
 **Arquivo:** `notes/models.py`
 ```python
@@ -54,41 +57,66 @@ class Note(models.Model):
     title = models.CharField(max_length=200)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-    owner = models.ForeignKey("auth.User", on_delete=models.CASCADE)
+    owner = models.ForeignKey("auth.User", on_delete=models.CASCADE)  # <-- Nova coluna!
 ```
 
-- **`on_delete=models.CASCADE`:** Se o usuário for apagado, suas anotações também são removidas.
-- Ao rodar `python manage.py makemigrations`, escolha a opção **`1`** e informe **`1`** (ID do usuário padrão para as anotações já existentes no banco), depois rode `migrate`.
+### O que significam os dois argumentos de `ForeignKey`?
+1. **`"auth.User"`:** Indica qual modelo/tabela estamos apontando (o modelo `User` do app nativo `auth`).
+2. **`on_delete=models.CASCADE`:** Regra de integridade do banco — se o usuário dono for deletado do sistema, todas as anotações dele são apagadas em cascata para não ficarem "órfãs".
 
 ---
 
-## Salvando o Dono e Filtrando por Usuário
+## O que Acontece no `makemigrations`? (Dúvida Clássica)
 
-**Arquivo:** `notes/views.py`
+Quando você roda `python manage.py makemigrations`, o Django faz uma pergunta no terminal:
+
+```text
+It is impossible to add a non-nullable field 'owner' to note without specifying a default.
+Please select a fix:
+ 1) Provide a one-off default now (will be set on all existing rows)
+ 2) Quit and manually define a default value in models.py.
+Select an option: 1
+Please enter the default value as valid Python: 1
+```
+
+### Por que o Django perguntou isso?
+- Você já tem 5 anotações antigas salvas no banco (do Check 2), que foram criadas **antes** da coluna `owner` existir.
+- Como toda anotação agora é obrigada a ter um `owner`, o Django pergunta: *"Qual ID de usuário devo colocar nas anotações antigas que já estão no banco?"*
+- Digitando `1` (opção 1) e depois `1` (ID do seu superusuário), todas as notas antigas passam a pertencer ao usuário `1`! Depois, basta rodar `python manage.py migrate`.
+
+---
+
+## Vinculando e Filtrando pelo Usuário Logado (`request.user`)
+
+Toda requisição autenticada traz o objeto do usuário atual em **`request.user`**:
+
 ```python
+# Arquivo: notes/views.py
 @login_required
 def index(request):
     if request.method == 'POST':
         title = request.POST.get('titulo')
         content = request.POST.get('detalhes')
+        # (1) Salva o usuário logado como dono da nova anotação:
         Note.objects.create(title=title, content=content, owner=request.user)
         return redirect('index')
 
-    # Filtra primeiro pelo usuário logado e depois ordena!
+    # (2) Busca APENAS as anotações cujo owner é o usuário logado:
     user_notes = Note.objects.filter(owner=request.user).order_by('-created_at')
     return render(request, 'notes/index.html', {'notes': user_notes})
 ```
 
 <div class="box">
-<strong>Por que <code>.filter().order_by()</code>?</strong> Filtrar antes reduz drasticamente a quantidade de registros que precisam ser comparados na ordenação!
+<strong>Por que colocamos <code>.filter(...)</code> antes de <code>.order_by(...)</code>?</strong><br>
+Porque filtrar primeiro descarta todas as anotações de outros usuários imediatamente, deixando muito menos linhas para o banco ordenar!
 </div>
 
 ---
 
 ## Hora da Prática: Check 10
 
-1. Adicione o campo `owner` (`ForeignKey` para `"auth.User"`) em `Note`.
-2. Crie e aplique as migrações definindo um usuário padrão para notas antigas.
-3. No POST da view, salve `request.user` como `owner` da nova anotação.
-4. Na listagem principal, mostre **apenas** as anotações criadas por `request.user`.
-5. Teste com 2 usuários diferentes!
+1. Adicione o campo `owner = models.ForeignKey("auth.User", on_delete=models.CASCADE)` na classe `Note`.
+2. Rode `makemigrations` (informando o usuário padrão `1`) e depois `migrate`.
+3. Na criação de notas (`views.py`), salve `owner=request.user`.
+4. Na listagem da página inicial, filtre com `Note.objects.filter(owner=request.user).order_by('-created_at')`.
+5. Crie um segundo usuário no `/admin/`, faça login com ele e comprove que cada usuário vê apenas suas próprias anotações!
